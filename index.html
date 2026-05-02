@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>alvaagency.ai — The Instagram Studio for Halal Supplement Brands</title>
+<title>alvaagency.ai — Carousel Content Studio for Halal Supplement Brands</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════
@@ -40,6 +40,19 @@ body {
   color: var(--obsidian);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════════
+   SCROLL PROGRESS BAR
+═══════════════════════════════════════════ */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: var(--ember);
+  z-index: 2000;
+  width: 0%;
+  transition: width .08s linear;
 }
 
 /* ═══════════════════════════════════════════
@@ -199,8 +212,11 @@ nav.scrolled { box-shadow: 0 4px 32px rgba(20,20,20,.08); }
   height: 1px;
   background: var(--obsidian);
   border-radius: 1px;
-  transition: .3s;
+  transition: transform .3s var(--ease), opacity .3s;
 }
+.hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
 .mobile-menu {
   display: none;
@@ -246,6 +262,34 @@ nav.scrolled { box-shadow: 0 4px 32px rgba(20,20,20,.08); }
   gap: 56px;
   position: relative;
 }
+/* Hero wrapper for full-bleed bg */
+.hero-wrapper {
+  position: relative;
+  background: var(--bone);
+  overflow: hidden;
+}
+.hero-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -20%; right: -10%;
+  width: 60vw; height: 60vw;
+  max-width: 720px; max-height: 720px;
+  background: radial-gradient(ellipse at center, rgba(200,83,30,.07) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .6;
+}
+.hero { position: relative; z-index: 1; }
 @media(min-width:900px){
   .hero {
     flex-direction: row;
@@ -742,12 +786,32 @@ nav.scrolled { box-shadow: 0 4px 32px rgba(20,20,20,.08); }
 .stats-strip {
   background: var(--ember);
   padding: 56px 0;
+  position: relative;
+  overflow: hidden;
+}
+.stats-strip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(20,20,20,.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.stats-strip::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+  background-size: 180px;
+  pointer-events: none;
+  opacity: .5;
 }
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1px;
   background: rgba(20,20,20,.15);
+  position: relative;
+  z-index: 1;
 }
 @media(min-width:768px){
   .stats-grid { grid-template-columns: repeat(4, 1fr); }
@@ -860,12 +924,103 @@ nav.scrolled { box-shadow: 0 4px 32px rgba(20,20,20,.08); }
   background: var(--bone);
   padding: 40px 36px;
   position: relative;
+  transition: background .25s, transform .25s var(--ease), box-shadow .25s;
+  overflow: hidden;
+}
+.price-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: rgba(20,20,20,.1);
   transition: background .25s;
+}
+.price-card.featured::before {
+  background: var(--ember);
+}
+.price-card:hover:not(.featured)::before {
+  background: var(--ember);
+  opacity: .5;
 }
 .price-card.featured {
   background: var(--obsidian);
+  transform: translateY(-4px);
+  box-shadow: 0 24px 64px rgba(20,20,20,.18);
 }
-.price-card:hover:not(.featured) { background: var(--bone-dark); }
+.price-card:hover:not(.featured) {
+  background: var(--bone-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(20,20,20,.08);
+}
+
+/* ═══════════════════════════════════════════
+   FAQ / OBJECTION HANDLING
+═══════════════════════════════════════════ */
+.faq {
+  background: var(--bone);
+  padding: var(--section-pad);
+  border-top: 1px solid rgba(20,20,20,.07);
+}
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin-top: 56px;
+  border: 1px solid rgba(20,20,20,.08);
+}
+@media(min-width:768px){
+  .faq-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.faq-item {
+  padding: 32px 36px;
+  border-bottom: 1px solid rgba(20,20,20,.07);
+  position: relative;
+  cursor: pointer;
+  transition: background .2s;
+}
+@media(min-width:768px){
+  .faq-item:nth-child(odd) { border-right: 1px solid rgba(20,20,20,.07); }
+}
+.faq-item:hover { background: var(--bone-dark); }
+.faq-item:last-child, .faq-item:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+.faq-q {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 17px;
+  color: var(--obsidian);
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  justify-content: space-between;
+}
+.faq-q em { font-style: italic; color: var(--ember); }
+.faq-toggle {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  color: var(--stone);
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: transform .25s var(--ease);
+  line-height: 1;
+}
+.faq-item.open .faq-toggle { transform: rotate(45deg); color: var(--ember); }
+.faq-a {
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--stone);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .35s var(--ease), opacity .3s;
+  opacity: 0;
+}
+.faq-item.open .faq-a {
+  max-height: 200px;
+  opacity: 1;
+}
+.faq-a strong { color: var(--obsidian); font-weight: 500; }
 
 .price-tier {
   font-family: var(--font-mono);
@@ -944,69 +1099,6 @@ hr.thin {
   text-align: center;
   display: block;
 }
-
-/* ═══════════════════════════════════════════
-   TONE / DO & DON'T
-═══════════════════════════════════════════ */
-.voice {
-  background: var(--obsidian);
-  padding: var(--section-pad);
-}
-.voice .section-mono { color: var(--ember); }
-.voice .section-heading { color: var(--bone); }
-
-.voice-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2px;
-  background: rgba(242,237,228,.04);
-  margin-top: 56px;
-}
-@media(min-width:768px){
-  .voice-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-.voice-card {
-  padding: 36px;
-  background: var(--obsidian);
-  transition: background .25s;
-}
-.voice-card.do { background: rgba(242,237,228,.03); }
-.voice-card.dont { background: rgba(20,20,20,.5); }
-.voice-card:hover.do { background: rgba(242,237,228,.05); }
-
-.voice-tag {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-  display: block;
-}
-.do .voice-tag { color: var(--ember); }
-.dont .voice-tag { color: var(--stone); opacity: .6; }
-
-.voice-card p {
-  font-family: var(--font-display);
-  font-weight: 300;
-  font-size: clamp(18px, 2.5vw, 22px);
-  line-height: 1.4;
-  letter-spacing: -0.02em;
-}
-.do p { color: var(--bone); }
-.dont p { color: var(--stone); text-decoration: line-through; text-decoration-color: rgba(138,129,124,.4); }
-.do p em { font-style: italic; color: var(--ember); }
-
-.voice-descriptor {
-  font-family: var(--font-mono);
-  font-size: 8.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(138,129,124,.5);
-  margin-top: 16px;
-  display: block;
-}
-.do .voice-descriptor { color: rgba(242,237,228,.3); }
 
 /* ═══════════════════════════════════════════
    CTA BLOCK
@@ -1321,17 +1413,98 @@ footer {
 }
 
 /* ═══════════════════════════════════════════
-   SECTION COLOR ALTERNATION (inspired by ref)
+   SECTION COLOR ALTERNATION
 ═══════════════════════════════════════════ */
 .services { background: var(--bone); }
 .grid-preview { background: var(--bone-dark); }
-.pricing { background: var(--bone); border-top: 1px solid rgba(20,20,20,.08); }
-.voice { background: var(--obsidian); }
+/* Pricing: dark/obsidian — premium feel, stands out before FAQ */
+.pricing {
+  background: var(--obsidian);
+  border-top: none;
+}
+.pricing .section-mono { color: var(--ember); }
+.pricing .section-heading { color: var(--bone); }
+.pricing .section-heading em { color: var(--ember); }
+/* Price cards on dark bg */
+.pricing .price-card { background: rgba(242,237,228,.05); border: 1px solid rgba(242,237,228,.07); }
+.pricing .price-card::before { background: rgba(242,237,228,.08); }
+.pricing .price-card:hover:not(.featured) {
+  background: rgba(242,237,228,.08);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.25);
+}
+.pricing .price-card.featured {
+  background: var(--bone);
+  transform: translateY(-4px);
+  box-shadow: 0 24px 64px rgba(0,0,0,.3);
+}
+.pricing .price-card.featured::before { background: var(--ember); }
+.pricing .price-card.featured .price-tier { color: var(--stone); }
+.pricing .price-card.featured .price-amount { color: var(--obsidian); }
+.pricing .price-card.featured .price-cadence { color: var(--stone); }
+.pricing .price-card.featured hr.thin { background: rgba(20,20,20,.1); }
+.pricing .price-card.featured .price-desc { color: var(--stone); }
+.pricing .price-card.featured .price-features li { color: var(--obsidian); }
+.pricing .price-card.featured .price-features li::before { color: var(--ember); }
+.pricing .price-tier { color: rgba(242,237,228,.4); }
+.pricing .price-amount { color: var(--bone); }
+.pricing .price-cadence { color: rgba(242,237,228,.4); }
+.pricing hr.thin { background: rgba(242,237,228,.08); }
+.pricing .price-desc { color: rgba(242,237,228,.55); }
+.pricing .price-features li { color: rgba(242,237,228,.8); }
+.pricing .price-features li::before { color: var(--ember); }
+.pricing .btn-ghost {
+  color: var(--bone);
+  border-color: rgba(242,237,228,.25);
+}
+.pricing .btn-ghost:hover {
+  background: var(--bone);
+  color: var(--obsidian);
+  border-color: var(--bone);
+}
+.pricing p[style*="font-mono"] { color: rgba(242,237,228,.25) !important; }
+
+/* FAQ: bone — light breathing space after dark pricing */
+.faq { background: var(--bone); border-top: none; }
+
 .founder { background: var(--bone-dark); }
 .cta-block { background: var(--obsidian); border-top: none; }
 .cta-block h2 { color: var(--bone); }
 .cta-block p { color: rgba(242,237,228,.6); }
 .cta-block .section-mono { color: var(--ember); }
+
+/* ═══════════════════════════════════════════
+   PLATFORM PILLS
+═══════════════════════════════════════════ */
+.platform-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+}
+.platform-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border: 1px solid rgba(20,20,20,.14);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--stone);
+  background: rgba(20,20,20,.03);
+  transition: border-color .2s, color .2s;
+  cursor: default;
+}
+.platform-pill:hover { border-color: var(--ember); color: var(--obsidian); }
+.platform-pill-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--ember);
+  opacity: .5;
+  flex-shrink: 0;
+}
 
 
 .fade-up {
@@ -1351,6 +1524,8 @@ footer {
 </style>
 </head>
 <body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
 
 <!-- ═══════════════════════════════════════════
      NAV
@@ -1384,11 +1559,12 @@ footer {
 <!-- ═══════════════════════════════════════════
      HERO
 ═══════════════════════════════════════════ -->
+<div class="hero-wrapper">
 <section class="hero" style="padding-top:72px;">
   <div class="hero-left fade-up">
     <div class="hero-kicker">
       <span class="kicker-dot"></span>
-      <span class="mono" style="color:var(--stone);">Instagram Studio · Halal Supplements</span>
+      <span class="mono" style="color:var(--stone);">Carousel Studio · IG · Threads · LinkedIn · X · TikTok</span>
     </div>
 
     <h1>
@@ -1398,7 +1574,7 @@ footer {
     </h1>
 
     <p class="hero-sub">
-      Educative carousel content for halal supplement founders. Strategy, production, copy, publish — done for you. Followers become buyers.
+      Carousel content for halal supplement founders — IG, Threads, LinkedIn, X, and TikTok. Strategy, design, copy, publish — done for you. Followers become buyers.
     </p>
 
     <div class="hero-actions">
@@ -1422,6 +1598,14 @@ footer {
         <span class="proof-label">Day content lifespan</span>
       </div>
     </div>
+
+    <div class="platform-pills">
+      <span class="platform-pill"><span class="platform-pill-dot"></span>Instagram</span>
+      <span class="platform-pill"><span class="platform-pill-dot"></span>Threads</span>
+      <span class="platform-pill"><span class="platform-pill-dot"></span>LinkedIn</span>
+      <span class="platform-pill"><span class="platform-pill-dot"></span>X / Twitter</span>
+      <span class="platform-pill"><span class="platform-pill-dot"></span>TikTok</span>
+    </div>
   </div>
 
   <div class="hero-right fade-up delay-2">
@@ -1431,7 +1615,7 @@ footer {
       <div class="phone-frame">
         <div class="phone-inner">
           <div class="phone-notch"></div>
-          <div class="phone-label">@tayyib.co · sample feed</div>
+          <div class="phone-label">@tayyib.co · sample carousel</div>
           <div class="ig-grid">
             <div class="ig-tile t1">
               <span class="tile-label">01 · Cover</span>
@@ -1510,6 +1694,7 @@ footer {
     </div>
   </div>
 </section>
+</div><!-- end hero-wrapper -->
 
 <!-- ═══════════════════════════════════════════
      LOGOS BAR
@@ -1559,7 +1744,7 @@ footer {
   <div class="wrap">
     <div class="section-mono fade-up">01 · What We Do</div>
     <h2 class="section-heading fade-up delay-1">
-      Six deliverables.<br>One sign-off.<br><em>Every month.</em>
+      Five deliverables.<br>One sign-off.<br><em>Every month.</em>
     </h2>
     <div class="services-grid fade-up delay-2">
 
@@ -1578,25 +1763,25 @@ footer {
           <svg viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         </div>
         <h3>Script &amp; <em>Copywriting</em></h3>
-        <p>Captions, Reels scripts, carousel copy written in your voice — specific to your ingredients, your certifying body, your milligrams. No buzzwords.</p>
+        <p>Carousel copy and captions written in your brand voice — specific to your ingredients, your certifying body, your milligrams. No buzzwords, no filler.</p>
       </div>
 
       <div class="service-card">
         <span class="service-num">03</span>
         <div class="service-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
         </div>
-        <h3>On-location <em>Production</em></h3>
-        <p>Product, ingredient, founder. No stock. No props. No eucalyptus. Window light only.</p>
+        <h3>Carousel <em>Design</em></h3>
+        <p>Every slide designed in your brand palette — typography, layout, hierarchy, colour. Visually cohesive across IG, Threads, LinkedIn, X, and TikTok formats.</p>
       </div>
 
       <div class="service-card">
         <span class="service-num">04</span>
         <div class="service-icon">
-          <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg>
         </div>
-        <h3>Edit &amp; <em>Post-Production</em></h3>
-        <p>Every frame graded in brand palette. Reels cut to hold the first three seconds. Captions formatted, hashtags researched, accessibility captions added.</p>
+        <h3>Platform <em>Formatting</em></h3>
+        <p>Carousels sized and adapted for each platform — Instagram, Threads, LinkedIn, X, and TikTok. Hashtags researched, captions formatted, all queued and ready.</p>
       </div>
 
       <div class="service-card">
@@ -1605,7 +1790,7 @@ footer {
           <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
         </div>
         <h3>Scheduling &amp; <em>Publishing</em></h3>
-        <p>Content goes live on time. DMs that turn into discovery calls flagged for you. One sign-off, then your week stays clear.</p>
+        <p>Content goes live on time across all platforms. Enquiries that turn into discovery calls flagged for you. One sign-off, then your week stays clear.</p>
       </div>
 
       <div class="service-card">
@@ -1650,7 +1835,7 @@ footer {
 <!-- ═══════════════════════════════════════════
      WHY CAROUSEL — DATA SECTION
 ═══════════════════════════════════════════ -->
-<section style="background:var(--bone);padding:var(--section-pad);border-top:1px solid rgba(20,20,20,.06);" id="why">
+<section style="background:var(--bone-dark);padding:var(--section-pad);border-top:1px solid rgba(20,20,20,.06);" id="why">
   <div class="wrap">
     <div class="section-mono fade-up">01.5 · Why Carousel</div>
     <h2 class="section-heading fade-up delay-1">
@@ -1759,7 +1944,7 @@ footer {
   <div class="wrap">
     <div class="section-mono fade-up">02 · The Method</div>
     <h2 class="section-heading fade-up delay-1">
-      Strategy, script,<br>shoot, post —<br><em>handled.</em>
+      Strategy, design,<br>write, publish —<br><em>handled.</em>
     </h2>
     <div class="approach-steps fade-up delay-2">
 
@@ -1767,28 +1952,28 @@ footer {
         <span class="step-num">01</span>
         <span class="step-label">Week 01</span>
         <h3>Brand <em>Immersion</em></h3>
-        <p>We read every halal cert, every sourcing doc. One founder interview. The brief is written; it doesn't change.</p>
+        <p>We study every halal cert, every sourcing doc. One deep founder interview. The brief is locked — no scope creep, no moving goalposts.</p>
       </div>
 
       <div class="step">
         <span class="step-num">02</span>
         <span class="step-label">Week 02</span>
         <h3><em>Calendar</em> Build</h3>
-        <p>Nine-tile editorial rhythm. Calendar delivered day 10. Founder reviews, approves once. No back-and-forth.</p>
+        <p>Editorial rhythm mapped to 9 tiles. Delivered day 10. You review once. We don't loop back for endless approvals.</p>
       </div>
 
       <div class="step">
         <span class="step-num">03</span>
         <span class="step-label">Week 03</span>
-        <h3>Shoot &amp; <em>Edit</em></h3>
-        <p>On-location production day. Post-production in brand palette. Captions, hashtags, accessibility — all queued.</p>
+        <h3>Design &amp; <em>Copy</em></h3>
+        <p>Carousels scripted, designed in brand palette, sized for every platform. Captions written. Hashtag bank built. Everything formatted, queued, and ready to publish.</p>
       </div>
 
       <div class="step">
         <span class="step-num">04</span>
         <span class="step-label">Ongoing</span>
-        <h3><em>Ship</em> &amp; Optimise</h3>
-        <p>Publishes on schedule. Replies managed. Monthly report. The system improves; your calendar doesn't change.</p>
+        <h3><em>Publish</em> &amp; Optimise</h3>
+        <p>Goes live on schedule. Monthly performance report. The system compounds — your time investment stays at zero.</p>
       </div>
 
     </div>
@@ -1849,58 +2034,13 @@ footer {
 </section>
 
 <!-- ═══════════════════════════════════════════
-     TONE OF VOICE
-═══════════════════════════════════════════ -->
-<section class="voice" id="voice">
-  <div class="wrap">
-    <div class="section-mono fade-up">04 · The Voice</div>
-    <h2 class="section-heading fade-up delay-1">
-      Confident without volume.<br>Specific to the<br>point of <em>discomfort.</em>
-    </h2>
-
-    <div class="voice-grid fade-up delay-2">
-      <div class="voice-card do">
-        <span class="voice-tag">01 · Do</span>
-        <p>We work only with halal supplement brands. <em>That's the entire moat.</em></p>
-        <span class="voice-descriptor">Concrete · Confident · Declarative</span>
-      </div>
-      <div class="voice-card dont">
-        <span class="voice-tag" style="color:var(--stone);">01 · Don't</span>
-        <p>We provide innovative digital marketing solutions tailored for a variety of wellness verticals, including halal-friendly products.</p>
-        <span class="voice-descriptor">Generic · Passive · Committee-written</span>
-      </div>
-      <div class="voice-card do">
-        <span class="voice-tag">02 · Do</span>
-        <p>Halal is the standard, not the sticker. <em>The whole brand earns the cert.</em></p>
-        <span class="voice-descriptor">Naming what we reject</span>
-      </div>
-      <div class="voice-card dont">
-        <span class="voice-tag" style="color:var(--stone);">02 · Don't</span>
-        <p>Our cutting-edge content strategies drive synergistic, halal-aligned brand outcomes that resonate at scale.</p>
-        <span class="voice-descriptor">Buzzwords · Token mention · Empty</span>
-      </div>
-      <div class="voice-card do">
-        <span class="voice-tag">03 · Do</span>
-        <p>Your formula is cleaner than the category. <em>Nobody can tell from the feed.</em> We fix that.</p>
-        <span class="voice-descriptor">Plain speech · Acknowledges the pain</span>
-      </div>
-      <div class="voice-card dont">
-        <span class="voice-tag" style="color:var(--stone);">03 · Don't</span>
-        <p>We help you unlock growth through premium, faith-conscious brand experiences that resonate with your community.</p>
-        <span class="voice-descriptor">Performative · LinkedIn voice · No specifics</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
      PRICING
 ═══════════════════════════════════════════ -->
 <section class="pricing" id="pricing">
   <div class="wrap">
-    <div class="section-mono fade-up">05 · Pricing</div>
+    <div class="section-mono fade-up">04 · Pricing</div>
     <h2 class="section-heading fade-up delay-1">
-      A monthly system.<br>Not a campaign<br><em>per quarter.</em>
+      Simple pricing.<br>No setup fees,<br><em>no surprises.</em>
     </h2>
 
     <div class="pricing-grid fade-up delay-2">
@@ -1922,6 +2062,7 @@ footer {
           <li><strong>7-day</strong> turnaround</li>
         </ul>
         <a href="#contact" class="btn btn-ghost price-btn">Select Starter →</a>
+        <p style="font-family:var(--font-mono);font-size:9px;color:var(--stone);letter-spacing:0.1em;text-transform:uppercase;text-align:center;margin-top:12px;">Cancel anytime · No setup fee</p>
       </div>
 
       <div class="price-card featured">
@@ -1943,6 +2084,7 @@ footer {
           <li><strong>5-day</strong> turnaround</li>
         </ul>
         <a href="#contact" class="btn btn-primary price-btn">Select Growth →</a>
+        <p style="font-family:var(--font-mono);font-size:9px;color:rgba(242,237,228,.35);letter-spacing:0.1em;text-transform:uppercase;text-align:center;margin-top:12px;">Most popular · Start this week</p>
       </div>
 
       <div class="price-card">
@@ -1964,6 +2106,71 @@ footer {
           <li><strong>3-day</strong> turnaround</li>
         </ul>
         <a href="#contact" class="btn btn-ghost price-btn">Select Premium →</a>
+        <p style="font-family:var(--font-mono);font-size:9px;color:var(--stone);letter-spacing:0.1em;text-transform:uppercase;text-align:center;margin-top:12px;">Cancel anytime · No setup fee</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FAQ / OBJECTION HANDLING
+═══════════════════════════════════════════ -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="section-mono fade-up">05 · Common Questions</div>
+    <h2 class="section-heading fade-up delay-1">
+      Everything you're<br>wondering before<br>you <em>book the call.</em>
+    </h2>
+
+    <div class="faq-grid fade-up delay-2">
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>Do you work with brands outside Indonesia?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">Yes. We work with halal supplement brands globally — Malaysia, UAE, UK, US. The niche is the requirement, not the geography.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>Do you do photography or <em>video production?</em></span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">We don't do photography — but we don't need to. Our carousels are design-first: strong typography, data, ingredient facts, and editorial layouts that build authority without a single product photo.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>How involved do I need to be?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">One onboarding interview, one calendar approval. After that: nothing. We brief ourselves from your brand docs and flag only when we need a fact-check.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>Is there a <em>minimum commitment?</em></span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">We ask for 3 months minimum. Carousel authority builds over time — the brands that see the biggest lift are the ones who stay consistent through month two and three.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>What makes this different from a freelancer?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">A freelancer handles one part. We handle the entire content system — strategy, design, copy, calendar, and publish. And we do it exclusively for halal supplement brands, so the learning curve is already gone.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>When can we <em>start?</em></span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a"><strong>Within the week.</strong> Book the discovery call, we review your brand, and if it's a fit — onboarding starts immediately. No lengthy contracts, no agency delays.</div>
       </div>
 
     </div>
@@ -2022,9 +2229,9 @@ footer {
       You build the formula.<br><em>We build the brand.</em>
     </h2>
     <p>
-      One conversation. No retainers, no spec work, no onboarding fee.
-      We look at your brand and tell you what we'd build.
-      If it fits, we start within the week.
+      15 minutes. No pitch deck, no hard sell.
+      We look at your feed, tell you exactly what we'd fix — and what it would be worth.
+      If it's a fit, we start this week.
     </p>
     <div class="cta-actions">
       <a href="mailto:hello@alvaagency.ai" class="btn btn-primary">Book a Discovery Call →</a>
@@ -2046,7 +2253,7 @@ footer {
         <a href="#" class="footer-logo">alvaagency<em>.ai</em></a>
         <p class="footer-tagline">
           Halal at the source. <em>Premium at the surface.</em><br>
-          The Instagram studio for halal supplement brands. Fully done for you.
+          Carousel content for halal supplement brands — IG, Threads, LinkedIn, X &amp; TikTok.
         </p>
       </div>
 
@@ -2055,6 +2262,8 @@ footer {
         <a href="#work">Work</a>
         <a href="#approach">Approach</a>
         <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="#founder">Founder</a>
         <a href="#contact">Contact</a>
       </div>
 
@@ -2077,32 +2286,73 @@ footer {
      JAVASCRIPT
 ═══════════════════════════════════════════ -->
 <script>
-// Nav scroll
+// ── Scroll progress bar ──────────────────────
+const progressBar = document.getElementById('scrollProgress');
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  progressBar.style.width = progress + '%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+
+// ── Nav scroll shadow ────────────────────────
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 20);
-});
+}, { passive: true });
 
-// Mobile menu
+// ── Mobile menu with hamburger animation ─────
 const menuBtn = document.getElementById('menuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
 menuBtn.addEventListener('click', () => {
-  mobileMenu.classList.toggle('open');
+  const isOpen = mobileMenu.classList.toggle('open');
+  menuBtn.classList.toggle('open', isOpen);
+  menuBtn.setAttribute('aria-expanded', isOpen);
 });
 mobileMenu.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    menuBtn.classList.remove('open');
+  });
 });
 
-// Fade-up on scroll
+// ── FAQ accordion ────────────────────────────
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.faq-item.open').forEach(o => o.classList.remove('open'));
+    // Open clicked if it wasn't already open
+    if (!isOpen) item.classList.add('open');
+  });
+});
+
+// ── Fade-up on scroll ────────────────────────
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       e.target.classList.add('visible');
+      observer.unobserve(e.target);
     }
   });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+}, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
 
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// ── Active nav link on scroll ─────────────────
+const sections = document.querySelectorAll('section[id], div[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+const scrollSpy = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => {
+        a.style.opacity = a.getAttribute('href') === '#' + e.target.id ? '1' : '.7';
+      });
+    }
+  });
+}, { rootMargin: '-40% 0px -55% 0px' });
+sections.forEach(s => scrollSpy.observe(s));
 </script>
 
 </body>
