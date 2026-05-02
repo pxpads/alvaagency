@@ -1177,8 +1177,163 @@ footer {
 }
 
 /* ═══════════════════════════════════════════
-   ANIMATIONS
+   FOUNDER SECTION
 ═══════════════════════════════════════════ */
+.founder {
+  background: var(--bone-dark);
+  padding: var(--section-pad);
+  border-top: 1px solid rgba(20,20,20,.07);
+  position: relative;
+  overflow: hidden;
+}
+.founder::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(135deg, transparent 40%, rgba(200,83,30,.04) 100%);
+  pointer-events: none;
+}
+.founder-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  align-items: flex-start;
+}
+@media(min-width:900px){
+  .founder-inner {
+    flex-direction: row;
+    gap: 72px;
+    align-items: center;
+  }
+}
+.founder-image-col {
+  flex-shrink: 0;
+  position: relative;
+}
+.founder-img-wrap {
+  position: relative;
+  width: clamp(260px, 40vw, 340px);
+}
+.founder-img-wrap img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+.founder-img-tag {
+  position: absolute;
+  bottom: -1px;
+  left: -1px;
+  right: -1px;
+  background: var(--obsidian);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.founder-img-tag-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--ember);
+  flex-shrink: 0;
+  animation: pulse 2s infinite;
+}
+.founder-img-tag-text {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--bone);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: .7;
+}
+
+.founder-content-col {
+  flex: 1;
+  max-width: 560px;
+}
+.founder-content-col .section-heading {
+  margin-bottom: 8px;
+}
+.founder-name {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ember);
+  margin-bottom: 24px;
+  display: block;
+}
+
+.founder-speech {
+  position: relative;
+  margin: 36px 0;
+  padding: 32px 36px;
+  background: var(--obsidian);
+  border-left: 3px solid var(--ember);
+}
+.founder-speech::before {
+  content: '\201C';
+  position: absolute;
+  top: 12px; left: 20px;
+  font-family: var(--font-display);
+  font-size: 64px;
+  color: var(--ember);
+  opacity: .2;
+  line-height: 1;
+}
+.founder-speech p {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(18px, 2.5vw, 22px);
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  color: var(--bone);
+  font-style: italic;
+  position: relative;
+  z-index: 1;
+}
+.founder-speech p em {
+  font-style: normal;
+  color: var(--ember);
+}
+.founder-speech-attr {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--stone);
+  margin-top: 16px;
+  display: block;
+}
+
+.founder-bio {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--stone);
+  margin-bottom: 32px;
+}
+.founder-bio em {
+  font-style: italic;
+  color: var(--obsidian);
+}
+
+/* ═══════════════════════════════════════════
+   SECTION COLOR ALTERNATION (inspired by ref)
+═══════════════════════════════════════════ */
+.services { background: var(--bone); }
+.grid-preview { background: var(--bone-dark); }
+.pricing { background: var(--bone); border-top: 1px solid rgba(20,20,20,.08); }
+.voice { background: var(--obsidian); }
+.founder { background: var(--bone-dark); }
+.cta-block { background: var(--obsidian); border-top: none; }
+.cta-block h2 { color: var(--bone); }
+.cta-block p { color: rgba(242,237,228,.6); }
+.cta-block .section-mono { color: var(--ember); }
+
+
 .fade-up {
   opacity: 0;
   transform: translateY(24px);
@@ -1209,6 +1364,7 @@ footer {
     <li><a href="#work">Work</a></li>
     <li><a href="#approach">Approach</a></li>
     <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#founder">Founder</a></li>
     <li><a href="#contact" class="btn btn-primary nav-cta">Book a Call</a></li>
   </ul>
   <button class="hamburger" id="menuBtn" aria-label="Menu">
@@ -1220,6 +1376,7 @@ footer {
   <a href="#work">Work</a>
   <a href="#approach">Approach</a>
   <a href="#pricing">Pricing</a>
+  <a href="#founder">Founder</a>
   <a href="#contact">Contact</a>
   <a href="#contact" class="mm-cta">Book a Call →</a>
 </div>
@@ -1750,53 +1907,105 @@ footer {
 
       <div class="price-card">
         <span class="price-tier">Starter</span>
-        <div class="price-amount">$2,<em>400</em></div>
+        <div class="price-amount">$800</div>
         <span class="price-cadence">per month</span>
         <hr class="thin">
-        <p class="price-desc">For founders who need a premium feed without the headache. Twelve deliberate posts, fully handled.</p>
+        <p class="price-desc">For founders ready to build a consistent, premium feed — without spending hours on content.</p>
         <ul class="price-features">
-          <li>12 posts / month</li>
-          <li>Content strategy &amp; calendar</li>
-          <li>Copywriting &amp; captions</li>
-          <li>Creative direction &amp; templates</li>
-          <li>Scheduling &amp; publishing</li>
-          <li>Monthly performance report</li>
+          <li><strong>8 carousels</strong> / month</li>
+          <li>Captions</li>
+          <li>Hashtag strategy</li>
+          <li>Content calendar</li>
+          <li>Scheduling</li>
+          <li>Basic report</li>
+          <li><strong>1</strong> revision</li>
+          <li><strong>7-day</strong> turnaround</li>
         </ul>
-        <a href="#contact" class="btn btn-ghost price-btn">Book a Call →</a>
+        <a href="#contact" class="btn btn-ghost price-btn">Select Starter →</a>
       </div>
 
       <div class="price-card featured">
-        <span class="price-tier">Growth</span>
-        <div class="price-amount" style="color:var(--bone);">$4,<em>200</em></div>
+        <span class="price-tier">Growth · <span style="color:var(--ember);font-size:8px;letter-spacing:0.1em;">RECOMMENDED</span></span>
+        <div class="price-amount" style="color:var(--bone);">$1,300</div>
         <span class="price-cadence">per month</span>
         <hr class="thin">
-        <p class="price-desc">For brands ready to compete on the wellness shelf. Twenty posts plus six Reels, produced and live.</p>
+        <p class="price-desc">For brands ready to scale authority. More content, faster delivery, and a direct strategy call every month.</p>
         <ul class="price-features">
-          <li>20 posts + 6 Reels / month</li>
-          <li>Full on-location production day</li>
-          <li>Ingredient &amp; founder photography</li>
-          <li>Reels scripting &amp; editing</li>
-          <li>Community reply management</li>
-          <li>Bi-weekly performance check-in</li>
+          <li><strong>12 carousels</strong> / month</li>
+          <li>Captions</li>
+          <li>Hashtag strategy</li>
+          <li>Content calendar</li>
+          <li>Scheduling</li>
+          <li>Full report</li>
+          <li><strong>4 stories</strong> / month</li>
+          <li>Monthly strategy call</li>
+          <li><strong>2</strong> revisions</li>
+          <li><strong>5-day</strong> turnaround</li>
         </ul>
-        <a href="#contact" class="btn btn-primary price-btn">Book a Call →</a>
+        <a href="#contact" class="btn btn-primary price-btn">Select Growth →</a>
       </div>
 
       <div class="price-card">
         <span class="price-tier">Premium</span>
-        <div class="price-amount">$6,<em>800</em></div>
+        <div class="price-amount">$2,000</div>
         <span class="price-cadence">per month</span>
         <hr class="thin">
-        <p class="price-desc">The full content operating system. Everything in Growth, plus paid social, brand development, and a dedicated account manager.</p>
+        <p class="price-desc">The full content engine. Maximum output, deepest insights, and bi-weekly strategy sessions to stay ahead.</p>
         <ul class="price-features">
-          <li>Full content system</li>
-          <li>Two production days / month</li>
-          <li>Paid social creative assets</li>
-          <li>Brand identity guidance</li>
-          <li>Dedicated account manager</li>
-          <li>Weekly strategy sessions</li>
+          <li><strong>16 carousels</strong> / month</li>
+          <li>Captions</li>
+          <li>Hashtag strategy</li>
+          <li>Content calendar</li>
+          <li>Scheduling</li>
+          <li>Full report + insights</li>
+          <li><strong>8 stories</strong> / month</li>
+          <li>Bi-weekly strategy call</li>
+          <li><strong>3</strong> revisions</li>
+          <li><strong>3-day</strong> turnaround</li>
         </ul>
-        <a href="#contact" class="btn btn-ghost price-btn">Book a Call →</a>
+        <a href="#contact" class="btn btn-ghost price-btn">Select Premium →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FOUNDER
+═══════════════════════════════════════════ -->
+<section class="founder" id="founder">
+  <div class="wrap">
+    <div class="founder-inner">
+
+      <div class="founder-image-col fade-up">
+        <div class="founder-img-wrap">
+          <img src="founder.png" alt="Founder of Alva Agency" loading="lazy">
+          <div class="founder-img-tag">
+            <span class="founder-img-tag-dot"></span>
+            <span class="founder-img-tag-text">Founder · Alvaagency.ai</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="founder-content-col fade-up delay-2">
+        <div class="section-mono">06 · The Founder</div>
+        <h2 class="section-heading">
+          Built by a founder<br>who <em>speaks the market.</em>
+        </h2>
+        <span class="founder-name">Alva · Founder & Creative Director</span>
+
+        <div class="founder-speech">
+          <p>
+            I built this because halal supplement brands kept getting handed generic content that treated halal as a footnote — <em>not the foundation.</em> Your brand deserves better than that.
+          </p>
+          <span class="founder-speech-attr">— Alva · Founder, Alvaagency.ai</span>
+        </div>
+
+        <p class="founder-bio">
+          We work <em>exclusively</em> with halal supplement brands — no generalist clients, no diluted focus. Every carousel we produce is engineered to educate, build trust, and convert the Muslim buyer who researches before they purchase.
+        </p>
+
+        <a href="#contact" class="btn btn-primary">Work with Us →</a>
       </div>
 
     </div>
@@ -1808,7 +2017,7 @@ footer {
 ═══════════════════════════════════════════ -->
 <section class="cta-block" id="contact">
   <div class="cta-inner fade-up">
-    <div class="section-mono" style="justify-content:center;">06 · Get Started</div>
+    <div class="section-mono" style="justify-content:center;">07 · Get Started</div>
     <h2>
       You build the formula.<br><em>We build the brand.</em>
     </h2>
@@ -1818,11 +2027,11 @@ footer {
       If it fits, we start within the week.
     </p>
     <div class="cta-actions">
-      <a href="mailto:alva.nextenterprise@gmail.com" class="btn btn-primary">Book a Discovery Call →</a>
-      <a href="https://alvaagency.framer.com" class="btn btn-ghost" target="_blank">View Portfolio</a>
+      <a href="mailto:hello@alvaagency.ai" class="btn btn-primary">Book a Discovery Call →</a>
+      <a href="https://alvaagency.ai" class="btn btn-bone" target="_blank">View Portfolio</a>
     </div>
     <p style="margin-top:32px;margin-bottom:0;font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;color:var(--stone);text-transform:uppercase;">
-      alva.nextenterprise@gmail.com · @alvaagency.ai
+      hello@alvaagency.ai · alvaagency.ai
     </p>
   </div>
 </section>
@@ -1851,8 +2060,8 @@ footer {
 
       <div class="footer-contact">
         <span class="footer-contact-label">Contact</span>
-        <a href="mailto:alva.nextenterprise@gmail.com">alva.nextenterprise@gmail.com</a>
-        <a href="https://alvaagency.framer.com" target="_blank">alvaagency.framer.com</a>
+        <a href="mailto:hello@alvaagency.ai">hello@alvaagency.ai</a>
+        <a href="https://alvaagency.ai" target="_blank">alvaagency.ai</a>
         <a href="https://instagram.com/alvaagency.ai" target="_blank">@alvaagency.ai</a>
       </div>
     </div>
