@@ -289,8 +289,8 @@
     background: #eee;
     position: relative;
   }
-  .mockup-tile img { width:100%; height:100%; object-fit:cover; transition:transform 0.6s; }
-  .mockup-tile:hover img { transform:scale(1.05); }
+  .mockup-tile  { width:100%; height:100%; object-fit:cover; transition:transform 0.6s; }
+  .mockup-tile:hover  { transform:scale(1.05); }
   .mockup-footer {
     display: flex;
     justify-content: space-between;
@@ -530,8 +530,8 @@
   @media (min-width:640px) { .single-grid { grid-template-columns:repeat(3,1fr); gap:12px; } }
   @media (min-width:1024px) { .single-grid { grid-template-columns:repeat(5,1fr); gap:16px; } }
   .single-tile { position:relative; overflow:hidden; background:#222; aspect-ratio:4/5; display:block; text-decoration:none; border-radius:2px; }
-  .single-tile img { width:100%; height:100%; object-fit:cover; transition:transform 0.65s cubic-bezier(0.2,0.8,0.2,1),filter 0.4s ease; filter:saturate(0.9); }
-  .single-tile:hover img { transform:scale(1.05); filter:saturate(1.05); }
+  .single-tile  { width:100%; height:100%; object-fit:cover; transition:transform 0.65s cubic-bezier(0.2,0.8,0.2,1),filter 0.4s ease; filter:saturate(0.9); }
+  .single-tile:hover  { transform:scale(1.05); filter:saturate(1.05); }
   .single-tile::after { content:''; position:absolute; inset:0; background:linear-gradient(to top,rgba(26,26,26,0.75) 0%,transparent 55%); opacity:0; transition:opacity 0.4s ease; }
   .single-tile:hover::after { opacity:1; }
   .single-caption { position:absolute; bottom:14px; left:14px; right:14px; font-family:var(--font-mono); font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:#fff; opacity:0; transform:translateY(8px); transition:opacity 0.35s ease,transform 0.35s ease; z-index:2; }
@@ -546,7 +546,7 @@
   @media (min-width:1024px) { .carousel-slide { flex:0 0 33.333%; padding:0 9px; } }
   @media (min-width:1280px) { .carousel-slide { flex:0 0 27%; padding:0 10px; } }
   .carousel-inner { position:relative; aspect-ratio:4/5; background:#222; overflow:hidden; border-radius:2px; }
-  .carousel-inner img { width:100%; height:100%; object-fit:cover; }
+  .carousel-inner  { width:100%; height:100%; object-fit:cover; }
   .carousel-slide-num { position:absolute; top:12px; left:12px; font-family:var(--font-mono); font-size:9px; letter-spacing:0.12em; color:rgba(255,255,255,0.8); background:rgba(26,26,26,0.55); padding:4px 8px; border-radius:2px; backdrop-filter:blur(4px); }
   .carousel-controls { display:flex; align-items:center; justify-content:space-between; margin-top:20px; gap:12px; flex-wrap:wrap; }
   .carousel-dots { display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
@@ -605,7 +605,7 @@
     pointer-events: none;
     z-index: 1;
   }
-  .founder-photo img { width:100%; height:100%; object-fit:cover; }
+  .founder-photo  { width:100%; height:100%; object-fit:cover; }
   .founder-photo-placeholder {
     width: 100%;
     height: 100%;
@@ -1048,12 +1048,12 @@
             </div>
           </div>
           <div class="mockup-grid">
-            <div class="mockup-tile"><img src="images/single-2.jpg" alt="" loading="lazy" width="200" height="250" /></div>
-            <div class="mockup-tile"><img src="images/single-1.jpg" alt="" loading="lazy" width="200" height="250" /></div>
-            <div class="mockup-tile"><img src="images/single-3.jpg" alt="" loading="lazy" width="200" height="250" /></div>
-            <div class="mockup-tile"><img src="images/carousel-slide-3.jpg" alt="" loading="lazy" width="200" height="250" /></div>
-            <div class="mockup-tile"><img src="images/single-5.jpg" alt="" loading="lazy" width="200" height="250" /></div>
-            <div class="mockup-tile"><img src="images/single-4.jpg" alt="" loading="lazy" width="200" height="250" /></div>
+            <div class="mockup-tile">< src="single-2.jpg" alt="" loading="lazy" width="200" height="250" /></div>
+            <div class="mockup-tile">< src="single-1.jpg" alt="" loading="lazy" width="200" height="250" /></div>
+            <div class="mockup-tile"><img src="single-3.jpg" alt="" loading="lazy" width="200" height="250" /></div>
+            <div class="mockup-tile"><img src="carousel-slide-3.jpg" alt="" loading="lazy" width="200" height="250" /></div>
+            <div class="mockup-tile"><img src="single-5.jpg" alt="" loading="lazy" width="200" height="250" /></div>
+            <div class="mockup-tile"><img src="single-4.jpg" alt="" loading="lazy" width="200" height="250" /></div>
           </div>
           <div class="mockup-footer">
             <div class="mockup-tag">Packages from <strong>$800/mo</strong></div>
@@ -1139,11 +1139,11 @@
         </div>
       </div>
       <div class="single-grid">
-        <a class="single-tile" href="images/single-1.jpg" target="_blank" rel="noopener" data-reveal style="transition-delay:0ms;"><img src="images/single-1.jpg" alt="Pre-workout performance post — Pure Fuel" loading="lazy" width="400" height="500" /><span class="single-caption">01 · Performance</span></a>
-        <a class="single-tile" href="images/single-2.jpg" target="_blank" rel="noopener" data-reveal style="transition-delay:70ms;"><img src="images/single-2.jpg" alt="Daily Wellness Unleashed product post" loading="lazy" width="400" height="500" /><span class="single-caption">02 · Product</span></a>
-        <a class="single-tile" href="images/single-3.jpg" target="_blank" rel="noopener" data-reveal style="transition-delay:140ms;"><img src="images/single-3.jpg" alt="Sleep support — Deeper sleep, calmer mind" loading="lazy" width="400" height="500" /><span class="single-caption">03 · Sleep</span></a>
-        <a class="single-tile" href="images/single-4.jpg" target="_blank" rel="noopener" data-reveal style="transition-delay:210ms;"><img src="images/single-4.jpg" alt="Deep Rest packaging post" loading="lazy" width="400" height="500" /><span class="single-caption">04 · Packaging</span></a>
-        <a class="single-tile" href="images/single-5.jpg" target="_blank" rel="noopener" data-reveal style="transition-delay:280ms;"><img src="images/single-5.jpg" alt="VitaGreen editorial product hero" loading="lazy" width="400" height="500" /><span class="single-caption">05 · Editorial</span></a>
+        <a class="single-tile" href="single-1.jpg" target="_blank" rel="noopener" data-reveal style="transition-delay:0ms;"><img src="single-1.jpg" alt="Pre-workout performance post — Pure Fuel" loading="lazy" width="400" height="500" /><span class="single-caption">01 · Performance</span></a>
+        <a class="single-tile" href="single-2.jpg" target="_blank" rel="noopener" data-reveal style="transition-delay:70ms;"><img src="single-2.jpg" alt="Daily Wellness Unleashed product post" loading="lazy" width="400" height="500" /><span class="single-caption">02 · Product</span></a>
+        <a class="single-tile" href="single-3.jpg" target="_blank" rel="noopener" data-reveal style="transition-delay:140ms;"><img src="single-3.jpg" alt="Sleep support — Deeper sleep, calmer mind" loading="lazy" width="400" height="500" /><span class="single-caption">03 · Sleep</span></a>
+        <a class="single-tile" href="single-4.jpg" target="_blank" rel="noopener" data-reveal style="transition-delay:210ms;"><img src="single-4.jpg" alt="Deep Rest packaging post" loading="lazy" width="400" height="500" /><span class="single-caption">04 · Packaging</span></a>
+        <a class="single-tile" href="single-5.jpg" target="_blank" rel="noopener" data-reveal style="transition-delay:280ms;"><img src="single-5.jpg" alt="VitaGreen editorial product hero" loading="lazy" width="400" height="500" /><span class="single-caption">05 · Editorial</span></a>
       </div>
     </div>
  
@@ -1159,13 +1159,13 @@
       <div class="carousel" data-carousel="c1" data-reveal>
         <div class="carousel-track-wrap">
           <div class="carousel-track">
-            <div class="carousel-slide"><div class="carousel-inner"><span class="carousel-slide-num">01 / 07</span><img src="images/carousel-slide-1.jpg" alt="Sleeping well. Still exhausted?" loading="lazy" width="400" height="500" /></div></div>
-            <div class="carousel-slide"><div class="carousel-inner"><span class="carousel-slide-num">02 / 07</span><img src="images/carousel-slide-2.jpg" alt="Ordinary supplements vs Living nutrients" loading="lazy" width="400" height="500" /></div></div>
-            <div class="carousel-slide"><div class="carousel-inner"><span class="carousel-slide-num">03 / 07</span><img src="images/carousel-slide-3.jpg" alt="6 ingredients. 1 purpose." loading="lazy" width="400" height="500" /></div></div>
-            <div class="carousel-slide"><div class="carousel-inner"><span class="carousel-slide-num">04 / 07</span><img src="images/carousel-slide-4.jpg" alt="14 days — what changes" loading="lazy" width="400" height="500" /></div></div>
-            <div class="carousel-slide"><div class="carousel-inner"><span class="carousel-slide-num">05 / 07</span><img src="images/carousel-slide-5.jpg" alt="Start the morning with something truly good" loading="lazy" width="400" height="500" /></div></div>
-            <div class="carousel-slide"><div class="carousel-inner"><span class="carousel-slide-num">06 / 07</span><img src="images/carousel-slide-6.jpg" alt="VitaGreen — Pure. Halal. Vital." loading="lazy" width="400" height="500" /></div></div>
-            <div class="carousel-slide"><div class="carousel-inner"><span class="carousel-slide-num">07 / 07</span><img src="images/carousel-slide-7.jpg" alt="How to know if a supplement is truly halal" loading="lazy" width="400" height="500" /></div></div>
+            <div class="carousel-slide"><div class="carousel-inner"><span class="carousel-slide-num">01 / 07</span><img src="carousel-slide-1.jpg" alt="Sleeping well. Still exhausted?" loading="lazy" width="400" height="500" /></div></div>
+            <div class="carousel-slide"><div class="carousel-inner"><span class="carousel-slide-num">02 / 07</span><img src="carousel-slide-2.jpg" alt="Ordinary supplements vs Living nutrients" loading="lazy" width="400" height="500" /></div></div>
+            <div class="carousel-slide"><div class="carousel-inner"><span class="carousel-slide-num">03 / 07</span><img src="carousel-slide-3.jpg" alt="6 ingredients. 1 purpose." loading="lazy" width="400" height="500" /></div></div>
+            <div class="carousel-slide"><div class="carousel-inner"><span class="carousel-slide-num">04 / 07</span><img src="carousel-slide-4.jpg" alt="14 days — what changes" loading="lazy" width="400" height="500" /></div></div>
+            <div class="carousel-slide"><div class="carousel-inner"><span class="carousel-slide-num">05 / 07</span><img src="carousel-slide-5.jpg" alt="Start the morning with something truly good" loading="lazy" width="400" height="500" /></div></div>
+            <div class="carousel-slide"><div class="carousel-inner"><span class="carousel-slide-num">06 / 07</span><img src="carousel-slide-6.jpg" alt="VitaGreen — Pure. Halal. Vital." loading="lazy" width="400" height="500" /></div></div>
+            <div class="carousel-slide"><div class="carousel-inner"><span class="carousel-slide-num">07 / 07</span><img src="carousel-slide-7.jpg" alt="How to know if a supplement is truly halal" loading="lazy" width="400" height="500" /></div></div>
           </div>
         </div>
         <div class="carousel-controls">
